@@ -3,8 +3,8 @@ import Button from "../UI/Button/Button";
 import styles from "./Navigation.module.css";
 import AuthContext from "../../context/AuthContext";
 
-function Navigation(props) {
-  const { isLoggedIn } = useContext(AuthContext)
+function Navigation() {
+  const { isLoggedIn, onLogout } = useContext(AuthContext)
   return (
     <nav className={styles.nav}>
       <ul>
@@ -20,7 +20,7 @@ function Navigation(props) {
         )}
         {isLoggedIn && (
           <li>
-            <Button onClick={props.onLogout} color="secondary">
+            <Button onClick={onLogout} color="secondary">
               Salir
             </Button>
           </li>

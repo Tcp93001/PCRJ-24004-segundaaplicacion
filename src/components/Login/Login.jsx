@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
 import styles from "./Login.module.css";
+import AuthContext from "../../context/AuthContext";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -22,14 +23,14 @@ function reducer(state, action) {
       return {
         ...state,
         emailIsValid: state.email.includes('@'),
-        passwordIsValid: action.payload.trim().length > 6
+        passwordIsValid: state.password.trim().length > 6
       }
     default:
       return state
   }
 }
 
-function Login(props) {
+function Login() {
   // const [email, setEmail] = useState("");
   const [state, dispatch] = useReducer(reducer, {
     email: '',
@@ -38,6 +39,8 @@ function Login(props) {
     passwordIsValid: null
   })
 
+  const { onLogin } = useContext(AuthContext)
+
   // const [emailIsValid, setEmailIsValid] = useState();
   // const [password, setPassword] = useState("");
   // const [passwordIsValid, setPasswordIsValid] = useState();
@@ -45,7 +48,7 @@ function Login(props) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setFormIsValid(state.password.trim().length > 6 && <state className="email"></state>.includes("@"));
+      setFormIsValid(state.password.trim().length > 6 && state.email.includes("@"));
     }, 500);
 
     return () => {
@@ -75,7 +78,7 @@ function Login(props) {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(state.value, state.password);
+    onLogin(state.value, state.password);
   };
 
   return (
