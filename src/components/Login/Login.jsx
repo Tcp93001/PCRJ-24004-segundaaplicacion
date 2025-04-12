@@ -78,7 +78,7 @@ function Login() {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    onLogin(state.value, state.password);
+    onLogin(state.email, state.password);
   };
 
   return (
